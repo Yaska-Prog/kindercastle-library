@@ -35,7 +35,7 @@ exports.getBookById = async (req, res) => {
     const { id } = req.params;
     try {
         const result = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
-        if (result.rows.length === 0) {
+        if (result.rows.length == 0) {
             return res.status(404).json({ message: 'Book not found' });
         }
         res.status(200).json(result.rows[0]);
@@ -52,7 +52,7 @@ exports.updateBook = async (req, res) => {
             'UPDATE books SET title = $1, synopsis = $2, updated_at = NOW() WHERE id = $3 RETURNING *',
             [title, synopsis, id]
         );
-        if (result.rows.length === 0) {
+        if (result.rows.length == 0) {
             return res.status(404).json({ message: 'Book not found' });
         }
         res.status(200).json(result.rows[0]);
@@ -67,7 +67,7 @@ exports.deleteBook = async (req, res) => {
         const result = await pool.query('DELETE FROM books WHERE id = $1 RETURNING *', [
             id,
         ]);
-        if (result.rows.length === 0) {
+        if (result.rows.length == 0) {
             return res.status(404).json({ message: 'Book not found' });
         }
         res.status(200).json({ message: 'Book deleted' });
